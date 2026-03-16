@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy One Month ❤️</title>
+<title>Our First Month ❤️</title>
 
 <style>
 
@@ -11,75 +11,46 @@ body{
 margin:0;
 padding:0;
 font-family:'Segoe UI',sans-serif;
-background: linear-gradient(135deg,#ff758c,#ff7eb3);
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
-}
-
-.card{
-background:white;
-padding:40px;
-border-radius:20px;
-text-align:center;
-max-width:700px;
-box-shadow:0 20px 40px rgba(0,0,0,0.2);
-}
-
-h1{
-color:#ff4d6d;
-margin-bottom:10px;
-}
-
-p{
-color:#555;
-line-height:1.6;
-}
-
-.gallery{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-margin-top:20px;
-}
-
-.gallery img{
-width:100%;
-border-radius:12px;
-object-fit:cover;
-height:200px;
-box-shadow:0 8px 20px rgba(0,0,0,0.2);
-}
-
-.gallery img:last-child{
-grid-column:span 2;
-height:250px;
-}
-
-button{
-margin-top:25px;
-padding:12px 25px;
-border:none;
-border-radius:30px;
-background:#ff4d6d;
+background:black;
 color:white;
-font-size:16px;
-cursor:pointer;
-box-shadow:0 10px 25px rgba(255,77,109,0.4);
-transition:0.3s;
+text-align:center;
 }
 
-button:hover{
-transform:translateY(-2px);
+.slideshow{
+position:relative;
+height:100vh;
+width:100%;
+overflow:hidden;
+}
+
+.slide{
+position:absolute;
+width:100%;
+height:100%;
+opacity:0;
+transition:opacity 2s;
+}
+
+.slide img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.active{
+opacity:1;
 }
 
 .message{
-display:none;
-margin-top:20px;
-font-size:18px;
-color:#ff4d6d;
-font-weight:600;
+position:absolute;
+bottom:40px;
+left:50%;
+transform:translateX(-50%);
+background:rgba(0,0,0,0.5);
+padding:20px 30px;
+border-radius:10px;
+font-size:20px;
+max-width:80%;
 }
 
 </style>
@@ -87,42 +58,54 @@ font-weight:600;
 
 <body>
 
-<div class="card">
+<div class="slideshow">
 
-<h1>Rose 🌹</h1>
-
-<p>
-Today marks our first month together.
-It might be a short time to the world,
-but it already means a lot to me.
-</p>
-
-<h2>Happy One Month Anniversary ❤️</h2>
-
-<div class="gallery">
-
+<div class="slide active">
 <img src="photo1.jpg">
-<img src="photo2.jpg">
-<img src="photo3.jpg">
-<img src="photo4.jpg">
-<img src="photo5.jpg">
-
 </div>
 
-<button onclick="showMessage()">Click for a surprise</button>
+<div class="slide">
+<img src="photo2.jpg">
+</div>
 
-<div class="message" id="message">
-Thank you for making this past month beautiful.
-I look forward to many more moments with you. 💖
+<div class="slide">
+<img src="photo3.jpg">
+</div>
+
+<div class="slide">
+<img src="photo4.jpg">
+</div>
+
+<div class="slide">
+<img src="photo5.jpg">
+</div>
+
+<div class="message">
+Rose 🌹  
+<br><br>
+One month with you already feels special.  
+Thank you for the smiles, the conversations,  
+and the moments we've shared so far.  
+<br><br>
+Happy One Month Anniversary ❤️
 </div>
 
 </div>
 
 <script>
 
-function showMessage(){
-document.getElementById("message").style.display="block";
-}
+let slides = document.querySelectorAll(".slide");
+let index = 0;
+
+setInterval(() => {
+
+slides[index].classList.remove("active");
+
+index = (index + 1) % slides.length;
+
+slides[index].classList.add("active");
+
+}, 4000);
 
 </script>
 
