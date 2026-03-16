@@ -3,24 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our First Month ❤️</title>
+<title>Rose ❤️</title>
 
 <style>
 
 body{
 margin:0;
 padding:0;
-font-family:'Segoe UI',sans-serif;
+font-family:Segoe UI, sans-serif;
 background:black;
 color:white;
-text-align:center;
+overflow:hidden;
 }
 
 .slideshow{
 position:relative;
-height:100vh;
 width:100%;
-overflow:hidden;
+height:100vh;
 }
 
 .slide{
@@ -28,7 +27,7 @@ position:absolute;
 width:100%;
 height:100%;
 opacity:0;
-transition:opacity 2s;
+transition:opacity 2s ease-in-out;
 }
 
 .slide img{
@@ -43,14 +42,38 @@ opacity:1;
 
 .message{
 position:absolute;
-bottom:40px;
+bottom:80px;
 left:50%;
 transform:translateX(-50%);
-background:rgba(0,0,0,0.5);
-padding:20px 30px;
-border-radius:10px;
-font-size:20px;
+font-size:28px;
+text-align:center;
+background:rgba(0,0,0,0.45);
+padding:20px 35px;
+border-radius:12px;
 max-width:80%;
+}
+
+.final{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+text-align:center;
+font-size:34px;
+display:none;
+}
+
+.heart{
+position:absolute;
+color:#ff4d6d;
+font-size:20px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);opacity:0;}
+50%{opacity:1;}
+100%{transform:translateY(-10vh);opacity:0;}
 }
 
 </style>
@@ -60,52 +83,79 @@ max-width:80%;
 
 <div class="slideshow">
 
-<div class="slide active">
-<img src="photo1.jpg">
-</div>
+<div class="slide active"><img src="photo1.jpg"></div>
+<div class="slide"><img src="photo2.jpg"></div>
+<div class="slide"><img src="photo3.jpg"></div>
+<div class="slide"><img src="photo4.jpg"></div>
+<div class="slide"><img src="photo5.jpg"></div>
 
-<div class="slide">
-<img src="photo2.jpg">
-</div>
+<div class="message" id="text"></div>
 
-<div class="slide">
-<img src="photo3.jpg">
-</div>
-
-<div class="slide">
-<img src="photo4.jpg">
-</div>
-
-<div class="slide">
-<img src="photo5.jpg">
-</div>
-
-<div class="message">
-Rose 🌹  
-<br><br>
-One month with you already feels special.  
-Thank you for the smiles, the conversations,  
-and the moments we've shared so far.  
-<br><br>
+<div class="final" id="finalMessage">
+Rose 🌹<br><br>
+This has only been one month…<br>
+but it already feels special.<br><br>
 Happy One Month Anniversary ❤️
 </div>
 
 </div>
 
+<audio autoplay loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 
-let slides = document.querySelectorAll(".slide");
-let index = 0;
+let slides=document.querySelectorAll(".slide");
+let index=0;
 
-setInterval(() => {
+setInterval(()=>{
 
 slides[index].classList.remove("active");
 
-index = (index + 1) % slides.length;
+index=(index+1)%slides.length;
 
 slides[index].classList.add("active");
 
-}, 4000);
+if(index===slides.length-1){
+setTimeout(()=>{
+document.getElementById("finalMessage").style.display="block";
+},3000);
+}
+
+},4000);
+
+let text="Rose... every moment with you has been beautiful.";
+let i=0;
+
+function typing(){
+
+if(i<text.length){
+document.getElementById("text").innerHTML+=text.charAt(i);
+i++;
+setTimeout(typing,60);
+}
+
+}
+
+typing();
+
+setInterval(()=>{
+
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(10+Math.random()*20)+"px";
+heart.style.animationDuration=(3+Math.random()*5)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},6000);
+
+},500);
 
 </script>
 
