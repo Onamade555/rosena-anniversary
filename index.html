@@ -39,7 +39,6 @@
       0% { transform: translateY(100vh) rotate(0deg); }
       100% { transform: translateY(-150px) rotate(360deg); }
     }
-
     .container {
       position: relative;
       z-index: 2;
@@ -88,24 +87,63 @@
     .slide img {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Keeps full image visible, no cropping */
-      background: #111; /* fallback if transparent edges */
+      object-fit: contain;
+      background: #111;
     }
-    .music-btn {
-      margin-top: 30px;
-      padding: 12px 30px;
-      font-size: 1.2rem;
-      background: #ff4081;
-      color: white;
+    .music-btn, .letter-btn {
+      margin-top: 25px;
+      padding: 14px 40px;
+      font-size: 1.3rem;
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
       transition: all 0.3s;
+      box-shadow: 0 6px 18px rgba(255, 64, 129, 0.4);
+    }
+    .music-btn {
+      background: #ff4081;
+      color: white;
     }
     .music-btn:hover {
       background: #f50057;
       transform: scale(1.05);
+    }
+    .letter-btn {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      color: #fff;
+      margin-top: 15px;
+    }
+    .letter-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(255, 154, 158, 0.5);
+    }
+    #loveLetter {
+      margin-top: 40px;
+      max-width: 720px;
+      background: rgba(255, 255, 255, 0.92);
+      padding: 35px;
+      border-radius: 24px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1.2s ease;
+      display: none;
+    }
+    #loveLetter.show {
+      opacity: 1;
+      transform: translateY(0);
+      display: block;
+    }
+    #loveLetter h2 {
+      color: #c2185b;
+      margin-bottom: 25px;
+      font-size: 2.4rem;
+    }
+    #loveLetter p {
+      font-size: 1.35rem;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 25px;
     }
     .footer {
       position: absolute;
@@ -113,11 +151,11 @@
       font-size: 1rem;
       color: #777;
     }
-
     @media (max-width: 768px) {
       h1 { font-size: 2.8rem; }
       .slideshow { height: 50vh; }
       p.subtitle { font-size: 1.3rem; }
+      #loveLetter { padding: 25px; }
     }
   </style>
 </head>
@@ -126,7 +164,7 @@
 
   <div class="container">
     <h1>One Month of Us 💖</h1>
-    <p class="subtitle">Happy 1-Month Anniversary, my love! Here's to many more moments like these...</p>
+    <p class="subtitle">Happy 1-Month Anniversary, my forever favorite person! 🥰</p>
 
     <div class="slideshow">
       <div class="slide active"><img src="photo1.jpg" alt="Us 1"></div>
@@ -139,7 +177,17 @@
 
     <button class="music-btn" id="musicToggle">Play Our Song ♫</button>
 
-    <div class="footer">Made with all my love for you • March 2026</div>
+    <button class="letter-btn" id="letterBtn">Open My Letter 💌</button>
+
+    <div id="loveLetter">
+      <h2>My sweetest [Her Name],</h2>
+      <p>Can you believe it's already been one whole month? Every single day with you feels like I'm living in the best dream I never want to wake up from.</p>
+      <p>Your smile lights up my entire world, your voice is my favorite sound, and just knowing you're mine makes everything better. Thank you for every laugh, every hug, every late-night talk, and every tiny moment we've shared. I fall for you a little more every day.</p>
+      <p>Here's to us — to more adventures, more cuddles, more "I love you"s, and to the forever that's already started. You're my person, always.</p>
+      <p>With all my love (and then some),<br>Your [Your Name] 💕</p>
+    </div>
+
+    <div class="footer">Made with endless love for you • March 2026</div>
   </div>
 
   <audio id="bgMusic" loop>
@@ -147,30 +195,30 @@
     Your browser does not support the audio element.
   </audio>
 
+  <!-- Tiny confetti library via CDN (optional but fun) -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
   <script>
-    // Slideshow auto-slide
+    // Slideshow
     const slides = document.querySelectorAll('.slide');
     let current = 0;
-
     function nextSlide() {
       slides[current].classList.remove('active');
       current = (current + 1) % slides.length;
       slides[current].classList.add('active');
     }
+    setInterval(nextSlide, 3000);
 
-    setInterval(nextSlide, 3000); // Change slide every 3 seconds
-
-    // Music play/pause
+    // Music toggle
     const audio = document.getElementById('bgMusic');
-    const btn = document.getElementById('musicToggle');
-
-    btn.addEventListener('click', () => {
+    const musicBtn = document.getElementById('musicToggle');
+    musicBtn.addEventListener('click', () => {
       if (audio.paused) {
         audio.play();
-        btn.textContent = 'Pause Music ♫';
+        musicBtn.textContent = 'Pause Music ♫';
       } else {
         audio.pause();
-        btn.textContent = 'Play Our Song ♫';
+        musicBtn.textContent = 'Play Our Song ♫';
       }
     });
 
@@ -180,14 +228,29 @@
       heart.classList.add('heart');
       heart.innerHTML = '❤️';
       heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.animationDuration = (Math.random() * 5 + 8) + 's'; // 8-13s
+      heart.style.animationDuration = (Math.random() * 5 + 8) + 's';
       heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
       document.getElementById('hearts').appendChild(heart);
-
       setTimeout(() => heart.remove(), 15000);
     }
+    setInterval(createHeart, 800);
 
-    setInterval(createHeart, 800); // New heart every 0.8s
+    // Reveal love letter + confetti
+    const letterBtn = document.getElementById('letterBtn');
+    const loveLetter = document.getElementById('loveLetter');
+
+    letterBtn.addEventListener('click', () => {
+      loveLetter.classList.add('show');
+      letterBtn.style.display = 'none';  // Hide button after click
+
+      // Optional confetti celebration
+      confetti({
+        particleCount: 120,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ff4d94', '#ff4081', '#ff80ab', '#ffffff']
+      });
+    });
   </script>
 </body>
 </html>
